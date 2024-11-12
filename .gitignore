@@ -1,3 +1,7 @@
 /node_modules
 dist
 .parcel-cache/
+class2/node_modules
+class2/dist
+class3/node_modules
+class3/dist
