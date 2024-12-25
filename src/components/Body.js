@@ -24,6 +24,7 @@ async function FetchData() {
 function Body() {
     const [restaurant_datan, setrestaurant_datan] = useState([]);
     const [search, setsearch] = useState("");
+    const [filtered_restaurent,setfiltered_restaurent] = useState([])
 
     // Fetch data once when the component mounts
     useEffect(() => {
@@ -31,6 +32,8 @@ function Body() {
             try {
                 const data = await FetchData();
                 setrestaurant_datan(data); // Set the fetched data
+                setfiltered_restaurent(data);
+
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -55,13 +58,15 @@ function Body() {
             // Filter the restaurant data based on the search term
             const filtered_rest = restaurant_datan.filter((data) => {
                 return data.data.name.toLowerCase().includes(search.toLowerCase());
-            });
-            setrestaurant_datan(filtered_rest); // Update the state with the filtered results
+            }
+            
+        );
+        setfiltered_restaurent(filtered_rest); 
         } else {
             // If search is empty, fetch fresh data
             try {
                 const data = await FetchData();
-                setrestaurant_datan(data); // Reset the data
+                setfiltered_restaurent(data); // Reset the data
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -84,8 +89,8 @@ function Body() {
             </div>
             <div className="res-container">
                 {/* Display filtered or fetched restaurant data */}
-                {restaurant_datan.length > 0 ? (
-                    restaurant_datan.map((restaurant, index) => (
+                {filtered_restaurent.length > 0 ? (
+                    filtered_restaurent.map((restaurant, index) => (
                         <RestaurantCard key={index} res={restaurant} />
                     ))
                 ) : (
